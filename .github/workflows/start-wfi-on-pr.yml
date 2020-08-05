@@ -1,0 +1,18 @@
+name: Open PR
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  deploy-workflows:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start Workflow on PR Opened
+        uses: jwulf/zeebe-action@master
+        with:
+          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          operation: createWorkflowInstance
+          bpmnProcessId: pr-workflow
