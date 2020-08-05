@@ -31,7 +31,7 @@ The model should look like this:
 
 ![](assets/zeebe-github-model-1.png)
 
-## Create a GitHub workflow to deploy on push
+## Create a GitHub workflow to deploy BPMN Models on push
 
 We will create a GitHub workflow to deploy the model on a push to the master branch of the repo.
 
@@ -115,3 +115,7 @@ jobs:
           bpmnProcessId: pr-workflow
 ```
 * Commit the new file, and push to master.
+
+You will see the "Open PR" workflow in the GitHub Actions tab in your repository.
+
+Now we will create a PR to test the workflow creation.
