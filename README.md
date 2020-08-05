@@ -113,6 +113,7 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
+          variables: '{"pr": "${{ github.event }}"'
 ```
 * Commit the new file, and push to master.
 
