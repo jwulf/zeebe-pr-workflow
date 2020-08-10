@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Print Event
-        run: echo The event is ${{ github.event }}
+        run: echo The event is ${{ toJson(github.event) }}
       - name: Start Workflow on PR Opened
         uses: jwulf/zeebe-action@master
         with:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
-          variables: '{"pr": "${{ github.event }}"'
+          variables: '{"pr": "${{ toJson(github.event) }}"}'
