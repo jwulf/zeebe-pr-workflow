@@ -115,3 +115,21 @@ jobs:
           bpmnProcessId: pr-workflow
 ```
 * Commit the new file, and push to master.
+
+## View GitHub Action execution 
+
+* Open your repository on GitHub.
+* Click on Actions.
+* You will see the run of your workflow in here. 
+
+You can click into it and inspect its execution, and debug any issues.
+
+## View the Workflow Instance in Camunda Cloud
+
+* Go to your cluster in the Camunda Cloud console at [https://camunda.io](https://camunda.io).
+* In the overview, click on "View Instances".
+* Click on "PR Workflow" in the "Instances by Workflow" column.
+* In the Workflows view, click on the Filter checkbox for "Finished Instances".
+* Click on the workflow execution in the "Instances panel".
+
+Here you can examine the payload of the workflow, showing you the data received from the PR request.
