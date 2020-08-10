@@ -10,8 +10,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Print Event
-        run: echo The event is ${{ toJson(github.event) }}
+      # - name: Print Event
+      #   run: echo The event is ${{ toJson(github.event) }}
       - name: Start Workflow on PR Opened
         uses: jwulf/zeebe-action@master
         with:
