@@ -1,4 +1,4 @@
-log.info(__dir);
+log.info(__dirname);
 module.exports = {
   tasks: {
     email: (job, complete) => {
