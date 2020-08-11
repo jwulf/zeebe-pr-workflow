@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 jobs:
-  deploy-workflows:
+  open-pr-workflow:
     runs-on: ubuntu-latest
 
     steps:
@@ -16,3 +16,10 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
+      - name: Start Worker
+        uses: jwulf/zeebe-action@master
+        with:
+          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          operation: startWorkers
+          workerHandlerFile: workers.js
+          workerLifetimeMins: 1
