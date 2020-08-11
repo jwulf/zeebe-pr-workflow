@@ -5,7 +5,7 @@ on:
     types: [opened]
 
 jobs:
-  deploy-workflows:
+  open-pr-workflow:
     runs-on: ubuntu-latest
 
     steps:
