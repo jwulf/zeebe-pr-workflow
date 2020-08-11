@@ -102,7 +102,7 @@ on:
     types: [opened]
 
 jobs:
-  start-pr-workflow:
+  open-pr-workflow:
     runs-on: ubuntu-latest
 
     steps:
@@ -154,6 +154,93 @@ You can click into it and inspect its execution, and debug any issues.
 * Click on the workflow execution in the "Instances panel".
 
 Here you can examine the payload of the workflow, showing you the data received from the PR request.
+
+## Merge Pull Request 
+
+* Merge your pull request on GitHub.
+* Switch back to master and pull the merge commit in your local repo:
+
+```
+git checkout master 
+git pull 
+```
+
+## Add a Service Task 
+
+* Open the model in the Zeebe Modeler.
+* Rename the Start Event to "Open PR". This more accurately represents the semantics of the event.
+* Add a Task between the Start and End event.
+* Click the spanner/wrench icon on the Task and select "Service Task".
+* In the properties panel, set the Name to "Send PR Opened Email".
+* Set the Type to `send-email`.
+* Save the model.
+
+The model should look like this: 
+
+![](assets/zeebe-github-model-2.png)
+
+## Start a worker 
+
+We will start a Zeebe task worker in the GitHub Open PR workflow.
+
+* Edit the file `.github/workflows/start-wfi-on-pr.yml`. 
+* Change the content to the following:
+
+```yaml
+name: Open PR
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  open-pr-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start Workflow on PR Opened
+        uses: jwulf/zeebe-action@master
+        with:
+          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          operation: createWorkflowInstance
+          bpmnProcessId: pr-workflow
+      - name: Start Worker
+        uses: jwulf/zeebe-action@master
+        with:
+          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          operation: startWorkers
+          workerHandlerFile: .github/workflows/workers.js
+          workerLifetimeMins: 1
+
+```
+
+## Write the worker code
+
+* In the directory `.github/workflows`, create a file `workers.js`.
+* Paste the following content: 
+
+```javascript
+module.exports = {
+  tasks: {
+    "send-email": (job, complete) => {
+      log.info(JSON.stringify(job, null, 2));
+      complete.success();
+    },
+  },
+};
+```
+
+## Push to master 
+
+* Commit the changes to the model and push to master:
+
+```
+git add .
+git push 
+```
+
+## Create a worker
 
 ## Send an email on PR opening 
 
