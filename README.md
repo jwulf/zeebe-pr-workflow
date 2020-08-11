@@ -1,8 +1,8 @@
 # Zeebe PR Workflow Demo
 
-A demonstration of the Zeebe GitHub Action.
+A demonstration of the Zeebe GitHub Action. In this Getting Started Guide, you will use the Zeebe GitHub Action to automatically deploy BPMN workflows to Camunda Cloud on push to master, and to start a workflow when a new PR is opened and closed.
 
-Prerequisites:
+## Prerequisites:
 
 * Zeebe Modeler
 
@@ -102,7 +102,7 @@ on:
     types: [opened]
 
 jobs:
-  deploy-workflows:
+  start-pr-workflow:
     runs-on: ubuntu-latest
 
     steps:
@@ -113,8 +113,29 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
+          variables: '{"pr": ${{ toJson(github.event) }}'
 ```
 * Commit the new file, and push to master.
+
+## Create a PR
+
+Now we will create a PR to test the workflow creation.
+
+* Create a new branch in your repo:
+
+```
+git checkout -b pr-1
+```
+
+* Create a file in your repo called `README.md`. Put any content you like in it. 
+
+* Add the file, commit, and push to the remote.
+
+```
+git add .
+git commit -m "Add README"
+git push --set-upstream origin pr-1
+```
 
 ## View GitHub Action execution 
 
@@ -133,3 +154,7 @@ You can click into it and inspect its execution, and debug any issues.
 * Click on the workflow execution in the "Instances panel".
 
 Here you can examine the payload of the workflow, showing you the data received from the PR request.
+
+## Send an email on PR opening 
+
+We will send an email to the PR 
