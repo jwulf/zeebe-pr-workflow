@@ -12,6 +12,9 @@
     <bpmn:serviceTask id="Activity_1nkgone" name="Send PR Opened Email">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="send-email" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="template" value="pr_opened" />
+        </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0340kpx</bpmn:incoming>
       <bpmn:outgoing>Flow_1uz6cq5</bpmn:outgoing>
