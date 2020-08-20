@@ -113,7 +113,7 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
-          variables: '{"pr": ${{ toJson(github.event) }}'
+          variables: '{ "pr": ${{ toJson(github.event) }} }'
 ```
 * Commit the new file, and push to master.
 
@@ -205,6 +205,7 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: createWorkflowInstance
           bpmnProcessId: pr-workflow
+          variables: '{ "pr": ${{ toJson(github.event) }} }'
       - name: Start Worker
         uses: jwulf/zeebe-action@master
         with:
