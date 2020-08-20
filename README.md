@@ -17,7 +17,8 @@ A demonstration of the Zeebe GitHub Action. In this Getting Started Guide, you w
 
 ## Configure Secrets in your GitHub repo
 
-* In your GitHub repo, go to the repository settings Secrets configuration. Add a new Secret named `ZEEBE_CLIENT_CONFIG` and paste the Connection Info in there.
+* In your GitHub repo, go to the repository settings `Secrets` configuration. 
+* Add a new Secret named `ZEEBE_CLIENT_CONFIG` and paste the Connection Info in there.
 
 ## Create a new model
 
@@ -67,7 +68,7 @@ jobs:
 
 * Add the files: 
 
-```
+```bash
 git add .
 git commit -m "Initial commit"
 git push
@@ -123,7 +124,7 @@ Now we will create a PR to test the workflow creation.
 
 * Create a new branch in your repo:
 
-```
+```bash
 git checkout -b pr-1
 ```
 
@@ -131,7 +132,7 @@ git checkout -b pr-1
 
 * Add the file, commit, and push to the remote.
 
-```
+```bash
 git add .
 git commit -m "Add README"
 git push --set-upstream origin pr-1
@@ -160,7 +161,7 @@ Here you can examine the payload of the workflow, showing you the data received 
 * Merge your pull request on GitHub.
 * Switch back to master and pull the merge commit in your local repo:
 
-```
+```bash
 git checkout master 
 git pull 
 ```
@@ -173,15 +174,33 @@ git pull
 * Click the spanner/wrench icon on the Task and select "Service Task".
 * In the properties panel, set the Name to "Send PR Opened Email".
 * Set the Type to `send-email`.
+* Click on the `Headers` tab in the properties panel.
+* Create a new header with the key `template` and the value `pr_opened`
 * Save the model.
 
 The model should look like this: 
 
 ![](assets/zeebe-github-model-2.png)
 
+## Push Updated BPMN Model
+
+* Push the updated BPMN workflow model to master:
+
+```bash
+git add .
+git commit -m "update model"
+git push
+```
+
 ## Start a worker 
 
-We will start a Zeebe task worker in the GitHub Open PR workflow.
+We will start a Zeebe task worker to service the `send-email` task, as part of the GitHub Open PR workflow.
+
+* Create a new branch:
+
+```bash
+git checkout -b pr-2
+```
 
 * Edit the file `.github/workflows/start-wfi-on-pr.yml`. 
 * Change the content to the following:
@@ -218,6 +237,8 @@ jobs:
 
 ## Write the worker code
 
+This worker will just log out the job object that it receives, for now. 
+
 * In the directory `.github/workflows`, create a file `workers.js`.
 * Paste the following content: 
 
@@ -232,17 +253,51 @@ module.exports = {
 };
 ```
 
-## Push to master 
+## Create a PR
 
-* Commit the changes to the model and push to master:
+* Commit the changes and push to GitHub:
 
-```
+```bash
 git add .
-git push 
+git commit -m "Add README"
+git push --set-upstream origin pr-2
 ```
+* On GitHub, open a PR for the `pr-2` branch.
 
-## Create a worker
+## View GitHub Action execution 
+
+* Open your repository on GitHub.
+* Click on Actions.
+* You will see the run of your workflow in here. 
+* Click into it and look for the `Start Worker` step. 
+
+You will see the worker handle logging out the job, including the variable payload with the GitHub event.           
 
 ## Send an email on PR opening 
 
-We will send an email to the PR 
+We will send an email to a maintainer when a PR is opened. To do this, we will use the [`nodemailer`](https://nodemailer.com/about/) module in the worker.
+
+You will need an SMTP server to send email. You can use a service like Amazon's Simple Email Service (SES), Aliyun DirectMail, or (Sendinblue)[https://www.sendinblue.com/].
+
+You will need the following configuration:
+
+* SMTP host name
+* SMTP port 
+* SMTP user name 
+* SMTP password
+* SMTP TLS (true/false)
+
+* In a terminal, change into the GitHub workflow directory:
+
+```bash
+cd cd .github/workflows
+```
+
+* Initialise an npm project here, and add `nodemailer` and `nodemailer-express-handlebars` as dependencies:
+
+```bash
+npm init -y
+npm i nodemailer nodemailer-express-handlebars
+```
+
+* Add `.github/workflows/node_modules` to the `.gitignore` file in the root of your project.
