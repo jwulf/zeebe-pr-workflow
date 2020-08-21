@@ -5,6 +5,7 @@ process.env.NODE_PATH = workerNodeModules;
 // require.resolve.paths = (request) =>
 //   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
 
+console.log("NODE_PATH", process.env.NODE_PATH);
 console.log("Paths:", require.resolve.paths("nodemailer"));
 console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
 
