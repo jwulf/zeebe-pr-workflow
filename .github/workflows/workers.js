@@ -1,3 +1,4 @@
+console.log(process.cwd());
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
