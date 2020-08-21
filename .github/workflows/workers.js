@@ -26,7 +26,7 @@ module.exports = {
   tasks: {
     "send-email": (job, complete) => {
       const template = job.customHeaders.template;
-      const { event } = job.variables;
+      const { pr } = job.variables;
       const transporter = nodemailer.createTransport({
         host,
         port,
@@ -42,10 +42,10 @@ module.exports = {
       const message = {
         from,
         to,
-        subject: subjects[template](event),
+        subject: subjects[template](pr),
         template,
         context: {
-          event,
+          event: pr,
         },
         // text: "Plaintext version of the message",
         // html: "<p>HTML version of the message</p>",
