@@ -1,5 +1,9 @@
 console.log(process.cwd());
-require.paths.push(`${process.cwd()}/.github/workflows`);
+const resolve = require.resolve.paths;
+require.resolve.paths = (request) => [
+  ...resolve(request),
+  `${process.cwd()}/.github/workflows/node_modules/${request}`,
+];
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
