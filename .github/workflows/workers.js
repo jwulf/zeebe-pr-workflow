@@ -1,8 +1,8 @@
 console.log("Working directory:", process.cwd());
 const resolve = require.resolve.paths;
-require.resolve.paths = (request) => [
+require.resolve.paths = () => [
   ...resolve(request),
-  `${process.cwd()}/.github/workflows/node_modules/${request}`,
+  `${process.cwd()}/.github/workflows/node_modules`,
 ];
 console.log("Paths:", require.resolve.paths("nodemailer"));
 const nodemailer = require("nodemailer");
