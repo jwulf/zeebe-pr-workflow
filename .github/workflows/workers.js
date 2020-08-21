@@ -1,9 +1,10 @@
-console.log(process.cwd());
+console.log("Working directory:", process.cwd());
 const resolve = require.resolve.paths;
 require.resolve.paths = (request) => [
   ...resolve(request),
   `${process.cwd()}/.github/workflows/node_modules/${request}`,
 ];
+console.log("Paths:", require.resolve.paths("nodemailer"));
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
