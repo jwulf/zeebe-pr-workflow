@@ -1,6 +1,6 @@
 console.log("Working directory:", process.cwd());
 const resolve = require.resolve.paths;
-require.resolve.paths = () => [
+require.resolve.paths = (request) => [
   ...resolve(request),
   `${process.cwd()}/.github/workflows/node_modules`,
 ];
