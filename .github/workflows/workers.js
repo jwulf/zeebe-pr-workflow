@@ -1,13 +1,14 @@
 console.log("Working directory:", process.cwd());
-const resolve = require.resolve.paths;
-require.resolve.paths = (request) => [
-  `${process.cwd()}/.github/workflows/node_modules`,
-  ...resolve(request),
-];
-console.log("Paths:", require.resolve.paths("nodemailer"));
-console.log(
-  require("fs").readdirSync(`${process.cwd()}/.github/workflows/node_modules`)
-);
+const resolve = require.resolve;
+const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
+
+// const resolvePaths = require.resolve.paths;
+// require.resolve.paths = (request) =>
+//   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
+// console.log("Paths:", require.resolve.paths("nodemailer"));
+// console.log(require("fs").readdirSync(workerNodeModules));
+require.resolve = (request) => resolve(request, { paths: [workerNodeModules] });
+
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
