@@ -1,11 +1,3 @@
-// console.log("Working directory:", process.cwd());
-// const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
-// const { createRequireFromPath } = require("module");
-// require = createRequireFromPath(workerNodeModules);
-
-// console.log("Paths:", require.resolve.paths("nodemailer"));
-// console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
-
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
 
@@ -47,12 +39,20 @@ module.exports = {
         context: {
           event: pr,
         },
-        // text: "Plaintext version of the message",
-        // html: "<p>HTML version of the message</p>",
+      };
+
+      const success = (complete) => {
+        log.info("Email sent");
+        complete.success();
+      };
+
+      const failure = (complete, err) => {
+        log.info(err);
+        complete.failure(err);
       };
 
       transporter.sendMail(message, (err) =>
-        err ? complete.failure(err) : complete.success()
+        err ? failure(complete, err) : success(complete)
       );
     },
   },

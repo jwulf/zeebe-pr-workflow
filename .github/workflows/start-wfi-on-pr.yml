@@ -23,4 +23,4 @@ jobs:
           clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
           operation: startWorkers
           workerHandlerFile: .github/workflows/workers.js
-          workerLifetimeMins: 1
+          workerLifetimeMins: 2
