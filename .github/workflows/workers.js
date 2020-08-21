@@ -29,7 +29,10 @@ module.exports = {
         },
       });
 
-      transporter.use("compile", hbs({ viewPath: "templates" }));
+      transporter.use(
+        "compile",
+        hbs({ viewPath: `.github/workflows/templates` })
+      );
 
       const message = {
         from,
