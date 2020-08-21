@@ -1,3 +1,4 @@
+module.exports.mainTemplate = `
 <!doctype html>
 <html lang="en">
 
@@ -7,9 +8,7 @@
 </head>
 
 <body>
-
-    {{{body}}}
-
+    {{body}}
 </body>
 
-</html>
+</html>`;

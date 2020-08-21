@@ -1,5 +1,8 @@
 const nodemailer = require("nodemailer");
-const hbs = require("nodemailer-express-handlebars");
+const { render } = require("micromustache");
+
+const { mainTemplate } = require("./templates/main");
+const { pr_opened } = require("./templates/pr_opened");
 
 const host = process.env.SMTP_HOST;
 const port = process.env.SMTP_PORT;
@@ -12,6 +15,10 @@ const to = process.env.SMTP_TO;
 const subjects = {
   pr_opened: (event) =>
     `Pull Request ${event.number} opened in ${event.pull_request.base.repo.full_name} by ${event.pull_request.head.user.login}`,
+};
+
+const bodyTemplates = {
+  pr_opened,
 };
 
 module.exports = {
@@ -29,19 +36,14 @@ module.exports = {
         },
       });
 
-      transporter.use(
-        "compile",
-        hbs({ viewPath: `.github/workflows/templates` })
-      );
+      const body = render(bodyTemplates[template], { event: pr });
+      const html = render(mainTemplate, { body });
 
       const message = {
         from,
         to,
         subject: subjects[template](pr),
-        template,
-        context: {
-          event: pr,
-        },
+        html,
       };
 
       const success = (complete) => {
