@@ -1,9 +1,9 @@
 console.log("Working directory:", process.cwd());
 const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
-
-const resolvePaths = require.resolve.paths;
-require.resolve.paths = (request) =>
-  resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
+process.env.NODE_PATH = workerNodeModules;
+// const resolvePaths = require.resolve.paths;
+// require.resolve.paths = (request) =>
+//   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
 
 console.log("Paths:", require.resolve.paths("nodemailer"));
 console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
