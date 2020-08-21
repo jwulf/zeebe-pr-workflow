@@ -1,15 +1,10 @@
-console.log("Working directory:", process.cwd());
-const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
-const { createRequireFromPath } = require("module");
-require = createRequireFromPath(workerNodeModules);
-process.env.NODE_PATH = workerNodeModules;
-// const resolvePaths = require.resolve.paths;
-// require.resolve.paths = (request) =>
-//   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
+// console.log("Working directory:", process.cwd());
+// const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
+// const { createRequireFromPath } = require("module");
+// require = createRequireFromPath(workerNodeModules);
 
-console.log("NODE_PATH", process.env.NODE_PATH);
-console.log("Paths:", require.resolve.paths("nodemailer"));
-console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
+// console.log("Paths:", require.resolve.paths("nodemailer"));
+// console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
 
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
@@ -30,7 +25,7 @@ const subjects = {
 module.exports = {
   tasks: {
     "send-email": (job, complete) => {
-      const template = job.headers.template;
+      const template = job.customHeaders.template;
       const { event } = job.variables;
       const transporter = nodemailer.createTransport({
         host,
