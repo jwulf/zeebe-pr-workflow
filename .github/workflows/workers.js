@@ -6,7 +6,7 @@ require.resolve.paths = (request) =>
   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
 
 console.log("Paths:", require.resolve.paths("nodemailer"));
-console.log(require("fs").readdirSync(workerNodeModules));
+console.log("Installed modules", require("fs").readdirSync(workerNodeModules));
 
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
