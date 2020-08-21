@@ -10,8 +10,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Install Workflow Dependencies
-        run: cd .github/workflows && npm i
       - name: Start Workflow on PR Opened
         uses: jwulf/zeebe-action@master
         with:
