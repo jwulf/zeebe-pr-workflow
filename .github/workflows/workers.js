@@ -5,9 +5,11 @@ const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
 // const resolvePaths = require.resolve.paths;
 // require.resolve.paths = (request) =>
 //   resolvePaths(request) ? [workerNodeModules, ...resolvePaths(request)] : null;
-// console.log("Paths:", require.resolve.paths("nodemailer"));
-// console.log(require("fs").readdirSync(workerNodeModules));
+
 require.resolve = (request) => resolve(request, { paths: [workerNodeModules] });
+
+console.log("Paths:", require.resolve.paths("nodemailer"));
+console.log(require("fs").readdirSync(workerNodeModules));
 
 const nodemailer = require("nodemailer");
 const hbs = require("nodemailer-express-handlebars");
