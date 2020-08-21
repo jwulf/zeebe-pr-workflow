@@ -1,6 +1,6 @@
 console.log("Working directory:", process.cwd());
 const workerNodeModules = `${process.cwd()}/.github/workflows/node_modules`;
-const { createRequire } = require("module");
+const { createRequireFromPath } = require("module");
 require = createRequireFromPath(workerNodeModules);
 process.env.NODE_PATH = workerNodeModules;
 // const resolvePaths = require.resolve.paths;
