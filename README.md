@@ -12,17 +12,27 @@ So, we're going to start a workflow when an external contributor opens a pull re
 
 We'll use email as our messaging system, and an email inbox as the task list.
 
+When we've completed this project, for any repo that is configured to participate, the concierge address will get an email:
+
+* When a PR is opened from another fork.
+* 24 hours after a PR is opened, to make sure that someone is looking at it.
+* Every two days after that, until the PR is closed, to remind the concierge to check how it is going.
+
 ## Prerequisites:
 
-* Zeebe Modeler
+* [Zeebe Modeler](https://github.com/zeebe-io/zeebe-modeler)
+* Free account on [Camunda Cloud](https://camunda.io)
 
 ## Create a GitHub repo
 
-We will use one repository for the automation, including running workers on a schedule. 
+We will use a repository for the automation. This repository will deploy the workflow, and run task workers on a schedule. 
 
 Other repositories will have GitHub workflow automation in them to start and update running workflow instances via messages.
 
 ## Create a Zeebe Cluster in Camunda Cloud
+
+* Log in to [https://camunda.io](https://camunda.io).
+* Create a new Zeebe cluster.
 
 ## Configure Client Connection Credentials
 
@@ -51,7 +61,7 @@ The model should look like this:
 We will create a GitHub workflow to deploy the model on a push to the master branch of the repo.
 
 * Create a folder `.github/workflows` in the root of your repository.
-* Create a file in there called `deploy-bpmn-from-master.yml`.
+* Create a file in there called `deploy-bpmn.yml`.
 * Paste in the following content: 
 
 ```yaml
@@ -274,10 +284,12 @@ SMTP_TO
 
 ### Write the worker code
 
+The worker code uses the [`zeebe-node`](https://www.npmjs.com/package/zeebe-node) client. The worker file exports an object `tasks` that 
+
 * In a terminal, change into the GitHub workflow directory:
 
 ```bash
-cd cd .github/workflows
+cd .github/workflows
 ```
 
 * Initialise an npm project here, and add `nodemailer` and `micromustache` as dependencies:
@@ -287,7 +299,7 @@ npm init -y
 npm i nodemailer micromustache
 ```
 
-* Add `.github/workflows/node_modules` to the `.gitignore` file in the root of your project.
+* Add "`.github/workflows/node_modules`" to the `.gitignore` file in the root of your project.
 
 * Create the file `.github/workflows/workers.js`, and paste the following code:
 
@@ -628,7 +640,7 @@ jobs:
           variables: '{"messageName": "pr_closed", "pr": ${{ toJson(github.event) }}}'
 ```
 
-This is the GitHub workflow that will run when a PR is closed. It will send a message that will start a new Zeebe workflow. When that workflow is serviced by the batchworker, it will publish a correlation message.
+This is the GitHub workflow that will run when a PR is closed. It will send a message that will start a new Zeebe workflow. When that workflow is serviced by the worker, it will publish a correlation message.
 
 We could publish directly to the running workflow instance, but to do that we would need to extract the correlation key from the `github.event` in the GitHub workflow. Instead, we delegate that to a worker. 
 
