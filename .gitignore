@@ -3,3 +3,4 @@ node_modules
 test.js
 event.json
 .vscode
+.DS_Store

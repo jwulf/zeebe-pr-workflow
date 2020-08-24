@@ -6,7 +6,7 @@ In this Getting Started Guide, you will use the Zeebe GitHub Action to automatic
 
 Our scenario is based on Hacktoberfest. We have a number of open source repos, and we're going to be encouraging external contributors to submit pull requests.
 
-We want people to have a great contributor experience, so we are going to shepherd their PRs through.
+We want people to have an extraordinary contributor experience, so we are going to shepherd their PRs through to victory.
 
 So, we're going to start a workflow when an external contributor opens a pull request. That workflow will enable someone to act as a "concierge" - to keep an eye on it, ensuring that it is getting attention from the project maintainer, and that it moves through the process.
 
