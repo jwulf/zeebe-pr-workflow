@@ -1,10 +1,14 @@
 # Zeebe PR Workflow Demo
 
-A demonstration of the Zeebe GitHub Action. In this Getting Started Guide, you will use the Zeebe GitHub Action to automatically deploy BPMN workflows to Camunda Cloud on push to master, and to start a workflow when a new PR is opened and closed.
+A demonstration of the [Zeebe GitHub Action](https://github.com/jwulf/zeebe-action) for integration with Camunda Cloud. 
 
-Our scenario, we have a number of open source repos, and we're going to be encouraging external contributors to submit pull requests.
+In this Getting Started Guide, you will use the Zeebe GitHub Action to automatically deploy BPMN workflows to Camunda Cloud on push to master, and to start a workflow for PRs.
 
-As part of creating a great contributor experience, we're going to start a workflow when an external contributor opens a pull request. That workflow will enable someone to act as a "concierge" - to keep an eye on it, ensuring that it is getting attention from the project maintainer and that it moves through the process.
+Our scenario is based on Hacktoberfest. We have a number of open source repos, and we're going to be encouraging external contributors to submit pull requests.
+
+We want people to have a great contributor experience, so we are going to shepherd their PRs through.
+
+So, we're going to start a workflow when an external contributor opens a pull request. That workflow will enable someone to act as a "concierge" - to keep an eye on it, ensuring that it is getting attention from the project maintainer, and that it moves through the process.
 
 We'll use email as our messaging system, and an email inbox as the task list.
 

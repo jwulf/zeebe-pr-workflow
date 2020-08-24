@@ -115,7 +115,7 @@
   </bpmn:process>
   <bpmn:message id="Message_1kowqig" name="pr_closed">
     <bpmn:extensionElements>
-      <zeebe:subscription correlationKey="pr.pull_request._links.html.href" />
+      <zeebe:subscription correlationKey="=pr.pull_request._links.html.href" />
     </bpmn:extensionElements>
   </bpmn:message>
   <bpmn:message id="Message_0f1286m" name="publish-correlated-message" />
