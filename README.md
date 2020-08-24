@@ -218,9 +218,9 @@ git push
 
 ## Start a worker 
 
-We will start Zeebe task workers to service the tasks in the workflow. It will run on a schedule, every hour. 
+We will start Zeebe task workers to service the tasks in the workflow. It will run on a schedule, every hour. GitHub Workflows that run on a schedule use [crontab](https://crontab.guru/) syntax to specify the schedule.
 
-We will pass the SMTP Configuration to the worker via the environment.
+We will pass the SMTP Configuration to the worker from the repository secrets via the environment.
 
 * Create the file `.github/workflows/workers.yml`, and paste the following content:
 
