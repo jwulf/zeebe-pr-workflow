@@ -208,7 +208,7 @@ git push
 
 ## Start a worker 
 
-We will start a Zeebe task worker to service the tasks in the workflow. It will run on a schedule, every hour. 
+We will start Zeebe task workers to service the tasks in the workflow. It will run on a schedule, every hour. 
 
 We will pass the SMTP Configuration to the worker via the environment.
 
@@ -249,7 +249,7 @@ We will send an email to a maintainer when a PR is opened. To do this, we will u
 
 ### SMTP Configuration 
 
-You will need an SMTP server to send email. You can use a service like Amazon's Simple Email Service (SES), Aliyun DirectMail, or (Sendinblue)[https://www.sendinblue.com/].
+You will need an SMTP server to send email. You can use a service like Amazon's Simple Email Service (SES), Aliyun DirectMail, or [Sendinblue](https://www.sendinblue.com/).
 
 You will need the following configuration:
 
@@ -399,7 +399,7 @@ We're going to modify the workflow like this:
 
 ![](assets/zeebe-github-model-3.png)
 
-You can download the model from [here]() and open it in the Zeebe modeler.
+You can download the model from [here](https://github.com/jwulf/zeebe-pr-workflow/blob/master/bpmn/pr-workflow.bpmn) and open it in the Zeebe modeler.
 
 In this workflow, our concierge receives an email when an external contributor opens a pull request; then an email 24 hours later; then a reminder email every two days until the pull request is closed.
 
