@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "A demonstration of the Zeebe GitHub Action. In this Getting Started Guide, you will use the Zeebe GitHub Action to automatically deploy BPMN workflows to Camunda Cloud on push to master, and to start a workflow when a new PR is opened and closed.",
   "main": "workers.js",
-  "dependencies": {
-    "nodemailer": "^6.4.11"
-  },
+  "dependencies": {},
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -1,0 +1,26 @@
+name: Run workers
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  open-pr-workflow:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Start Workers
+        uses: jwulf/zeebe-action@master
+        env:
+          SMTP_USERNAME: ${{ secrets.SMTP_USERNAME }}
+          SMTP_PASSWORD: ${{ secrets.SMTP_PASSWORD }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+          SMTP_FROM: ${{ secrets.SMTP_FROM }}
+          SMTP_TO: ${{ secrets.SMTP_TO }}
+        with:
+          clientConfig: ${{ secrets.ZEEBE_CLIENT_CONFIG }}
+          operation: startWorkers
+          workerHandlerFile: .github/workflows/workers.js
+          workerLifetimeMins: 2
