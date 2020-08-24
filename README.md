@@ -1,6 +1,6 @@
 # Zeebe PR Workflow Demo
 
-A demonstration of the [Zeebe GitHub Action](https://github.com/jwulf/zeebe-action) for integration with Camunda Cloud. 
+A demonstration of the [Zeebe GitHub Action](https://github.com/jwulf/zeebe-action) for integration with Camunda Cloud. The complete code for this guide is available at [https://github.com/jwulf/zeebe-pr-workflow](https://github.com/jwulf/zeebe-pr-workflow).
 
 In this Getting Started Guide, you will use the Zeebe GitHub Action to automatically deploy BPMN workflows to Camunda Cloud on push to master, and to start a workflow for PRs.
 
