@@ -1,6 +1,6 @@
 module.exports.two_daily = `<div>
     <p>
-        ${event.daysOpen} ago, pull request {{event.number}} was opened in {{event.pull_request.base.repo.full_name}} by
+        {{event.daysOpen}} ago, pull request {{event.number}} was opened in {{event.pull_request.base.repo.full_name}} by
         {{event.pull_request.head.user.login}}
     </p>
     <p>
