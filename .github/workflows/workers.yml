@@ -5,7 +5,7 @@ on:
     - cron: "0 * * * *"
 
 jobs:
-  open-pr-workflow:
+  run-workers:
     runs-on: ubuntu-latest
 
     steps:
